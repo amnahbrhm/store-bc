@@ -1,0 +1,5 @@
+export interface IPageing {
+    pagination: number;
+    page: number;
+    id: string
+}
