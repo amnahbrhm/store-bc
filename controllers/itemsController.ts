@@ -27,17 +27,14 @@ export const index = async (req: Request, res: Response, next: any) => {
 				throw error;
 			}
 		}
-		const pagination: number = req.query.pagination ? +req.query.pagination : 10;
-		const page: number = req.query.page ? +req.query.page : 10;
+		const pagination: number = +req.query.pagination!;
+		const page: number = +req.query.page!;
 		const items = await Item.find({})
-			.skip(((page || 1) - 1) * (pagination || 10))
-			.limit((pagination || 10))
+			.skip((page) * pagination)
+			.limit(pagination)
 			.sort({ createdAt: -1 });
-		const hasNextPage: number = (await Item.find({}))
-			.length
-			console.log(hasNextPage);
-			
-		res.status(200).send({ items, hasNextPage });
+		const rowsCount: number = (await Item.find({})).length
+		res.status(200).send({ items, rowsCount });
 	} catch (error) {
 		next(error);
 	}
@@ -45,12 +42,12 @@ export const index = async (req: Request, res: Response, next: any) => {
 
 export const add = async (req: Request, res: Response, next: any) => {
 	console.log('hey 3');
-	
+
 	try {
 		console.log(req.user);
-		
+
 		if (req.user) {
-			const { role } = req.user;			
+			const { role } = req.user;
 			if (role !== 'admin') {
 				const error = new Error("Sorry, you dont have privilege");
 				error.statusCode = 401;
@@ -85,7 +82,7 @@ async function getItemById(id: any): Promise<any> {
 export const getIamge = async (req: Request, res: Response, next: any) => {
 	try {
 		console.log(req.params);
-		
+
 		res.sendFile(path.join(__dirname, `/../uploads/${req.params.id}`));
 	} catch (err) {
 		next(err);

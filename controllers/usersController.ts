@@ -88,7 +88,7 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
                 throw error;
             }
             else {
-                const { id } = req.body;
+                const { id } = req.query;
                 // If Cast to ObjectId failed for id it would throw error 500 from db
                 const user = await User.findById(id);                
                 if (user) {
