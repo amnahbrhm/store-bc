@@ -9,9 +9,6 @@ const ItemSchema = new Schema({
     quantity: {
         type: String, required: true, default: "0"
     },
-    fav: {
-        type: Boolean, required: true, default: false
-    },
     img:
     {
         type: String, required: true, default: "img-1692706958914.png"

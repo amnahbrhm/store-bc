@@ -51,8 +51,6 @@ export const changeRole = async (req: Request, res: Response, next: NextFunction
 
 export const usersList = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log('herse 1');
-
         if (req.user) {
             const { role } = req.user;
             if (role !== 'admin') {
@@ -61,14 +59,23 @@ export const usersList = async (req: Request, res: Response, next: NextFunction)
                 throw error;
             }
             else {
-                const { pagination, page } = req.body;
+                const pagination: number = +req.query.pagination!;
+                const page: number = +req.query.page!;                
                 const users = await User.find({})
-                    .skip(((page || 1) - 1) * (pagination || 10))
-                    .limit((pagination || 10))
-                    .sort({ createdAt: -1 });
+                .skip((page-1) * pagination )
+                .limit(pagination)
+                // .sort({ createdAt: -1 });
+                    console.log('first');
+                    
+                    console.log(pagination, page);
+                    
+                    console.log( await User.find({})
+                    .skip(page * pagination )
+                    .limit(pagination));
+                    
                 const hasNextPage: boolean = (await User.find({})
-                    .skip((page || 1) * (pagination || 10))
-                    .limit(1))
+                    .skip(page * pagination )
+                    .limit(pagination))
                     .length === 0 ? false : true
                 res.status(200).send({ users, hasNextPage });
             }

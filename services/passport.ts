@@ -7,7 +7,6 @@ import { User } from '../models/user';
 
 export function init() {
     const secret = config.jwtSecret;
-    console.log('hey');
     if (!secret) {
         throw new Error('JWT_SECRET is undefined');
     }
@@ -20,9 +19,6 @@ export function init() {
 
     const strategy = new Strategy(jwtOpts, async (payload: JwtPayload, done: any) => {
         const user = await User.findById(payload.id);
-        console.log(user);
-        console.log(payload);
-        
         if (!user) return done(new Error("User not found"));
         return done(null, user);
     });

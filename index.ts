@@ -7,6 +7,7 @@ import * as passport from './services/passport';
 
 import cors from "cors"
 import { authRoutes } from "./routes/auth";
+import { favoriteRoutes } from "./routes/favorite";
 const app: Application = express();
 const port = 3000;
 
@@ -41,6 +42,7 @@ app.get(
 app.use("/api/auth", authRoutes);
 app.use("/api/items", itemsRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/wishlist", favoriteRoutes);
 
 app.use(errorHandler);
 

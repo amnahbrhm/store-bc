@@ -8,9 +8,6 @@ import multer from "multer"
 
 const storage = multer.diskStorage({
     destination: (req: any, file: any, cb: any) => {
-        console.log('hey 2');
-        console.log(req);
-
         cb(null, 'uploads')
     },
     filename: (req: any, file: any, cb: any) => {

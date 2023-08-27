@@ -9,6 +9,7 @@ declare global {
 	}
 	namespace Express {
 		interface User {
+			id: any;
 			role: string
 		}
 	}
@@ -30,7 +31,7 @@ export const index = async (req: Request, res: Response, next: any) => {
 		const pagination: number = +req.query.pagination!;
 		const page: number = +req.query.page!;
 		const items = await Item.find({})
-			.skip((page) * pagination)
+			.skip(page * pagination)
 			.limit(pagination)
 			.sort({ createdAt: -1 });
 		const rowsCount: number = (await Item.find({})).length
@@ -41,11 +42,7 @@ export const index = async (req: Request, res: Response, next: any) => {
 };
 
 export const add = async (req: Request, res: Response, next: any) => {
-	console.log('hey 3');
-
 	try {
-		console.log(req.user);
-
 		if (req.user) {
 			const { role } = req.user;
 			if (role !== 'admin') {
@@ -81,8 +78,6 @@ async function getItemById(id: any): Promise<any> {
 
 export const getIamge = async (req: Request, res: Response, next: any) => {
 	try {
-		console.log(req.params);
-
 		res.sendFile(path.join(__dirname, `/../uploads/${req.params.id}`));
 	} catch (err) {
 		next(err);
