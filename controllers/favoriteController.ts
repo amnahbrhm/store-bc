@@ -50,7 +50,9 @@ export const getList = async (req: Request, res: Response, next: any) => {
 			const list = await Favorite.findOne({user: req.user})
 			res.status(200).send(list);
 		}
-		res.status(200).send({ message: 'User Not Regitsterd' });
+		else {
+			res.status(200).send({ message: 'User Not Regitsterd' });
+		}
 	} catch (error) {
 		next(error);
 	}
