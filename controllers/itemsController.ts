@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Item } from "../models/item"
 import fs from "fs"
 import path from "path"
+import { IItem } from "../types/item";
 
 declare global {
 	interface Error {
@@ -115,5 +116,15 @@ export const editItem = async (req: Request, res: Response, next: any) => {
 		}
 	} catch (err) {
 		next(err);
+	}
+};
+
+export const getMulti = async (req: Request, res: Response, next: any) => {
+	try {
+		const arr = (req.query.list as string).split(',')
+		const items = await Item.find( { "_id" : { "$in" : arr } } )
+		res.status(200).send({ items });
+	} catch (error) {
+		next(error);
 	}
 };

@@ -1,5 +1,5 @@
 import express from "express";
-import { index, add, deleteItem, editItem, getIamge } from "../controllers/itemsController"
+import { index, add, deleteItem, editItem, getIamge, getMulti } from "../controllers/itemsController"
 import passport from "passport";
 // import t from "../middlewares/multer";
 const router = express.Router()
@@ -22,6 +22,7 @@ router.post("/",passport.authenticate('jwt', { session: false }), upload.single(
 router.delete("/", passport.authenticate('jwt', { session: false }), deleteItem)
 router.get("/image/:id", getIamge)
 router.get("/", index)
+router.get("/list", getMulti)
 router.put("/", passport.authenticate('jwt', { session: false }), upload.single('img'), editItem)
 
 export const itemsRoutes = router
