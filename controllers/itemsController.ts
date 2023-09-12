@@ -29,6 +29,9 @@ export const index = async (req: Request, res: Response, next: any) => {
 				throw error;
 			}
 		}
+		console.log('index fun items controller');
+		console.log(req.query.pagination);
+		
 		const pagination: number = +req.query.pagination!;
 		const page: number = +req.query.page!;
 		const items = await Item.find({})

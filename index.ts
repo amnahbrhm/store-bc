@@ -29,7 +29,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://devopstore:amn%401234@127.0.0.1:27017/?directConnection=true&authSource=admin&appName=mongosh+2.0.0", { useNewUrlParser: true }).then(() => console.log("Db Connected!"));
+mongoose.connect("mongodb://devopstore:amn%401234@127.0.0.1:27017/?directConnection=true&authSource=admin&appName=mongosh+2.0.0").then(() => console.log("Db Connected!"));
 // mongoose.connect("mongodb://devopshint:amn%401234@localhost:27017/store?authSource=admin").then(() => console.log("Db Connected!"));
 app.get(
     "/",
